@@ -76,4 +76,63 @@ To delete it from database
     - blgpst.destroy
 ```
 
-#### Timestamp : Part3 - completed - GORails
+## Rails routes 
+- root route -> by default it points to /
+- syntax for route:
+    ```
+    controller_name#action_name 
+    ```
+- Can create different routes for GET, POST, PATCH, PUT and DELETE requests
+    ```
+    get '/blog_posts/:id', to: 'blog_post#show' 
+    ```
+- Grabing the params from route 
+    ```
+        @blog_posts = BlogPost.find(params[:id])
+    ```
+- Route generator 
+    ```
+        get '/blog_posts/:id', to: 'blog_post#show' , as: :blog_post
+    ```
+    and this will generate follwoing function in code 
+    ```
+        blog_post_path(1) -> '/blog_posts/1'
+        blog_post_url(1) -> 'http://localhost:3000/blog_posts/1'
+    ```
+
+`NOTE: everytime we create a file in rails we make sure to create a class in that file which matches the name of that file`
+
+
+## Controller 
+- Controllers are inherited from `ApplicationController`, and it is inherrited from `ActionController::Base`
+- It gives a all the procesing thing to us which we can do with HTTP methods.
+- Naming conventions and declaration of controller class : eg. `class BlogPostsController`
+- File Nomenclature: eg. `
+
+## Views 
+- every view is associated with controller. So, in view also we need to create `/blog_posts/index.html.erb` file
+- Instanct Varible are gloab variable that are declared in controller and can be accessed in a view.
+    ```
+    @blog_posts = BlogPost.all
+    ```
+- ERB tags 
+    ```
+    <% 1 %>  -> // is not visible in html 
+    <%= 2 %> -> // will be visible to html
+    ```
+
+## Rescue method 
+- Record not found: 
+```  
+    rescue ActiveRecord::RecordNotFound
+        redirect_to root_path
+    end
+    // root_path -> "/"
+```
+
+### link_to helper
+`<%= link_to <text we want to disply> ,'<route we want it to redirect>' %> `
+eg. 
+```
+    <%= link_to @blog_title ,'/blog_posts/#{@blog_title.id}' %> 
+```

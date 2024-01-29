@@ -1,0 +1,11 @@
+<h2>
+Hello, Welcome to my blog!
+</h2>
+<div>
+    <% @blog_posts.each do |value| %>
+    <div>
+       <%= link_to value.title, "/blog_posts/#{value.id}" %> 
+
+    </div>
+    <% end %>
+</div>

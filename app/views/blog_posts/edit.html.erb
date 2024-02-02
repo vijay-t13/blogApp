@@ -1,0 +1,12 @@
+<h2>New Blog</h2>
+<%= form_with(model: @blog_post, method: :patch) do |form| %>
+    <div>
+        <%= form.label :title %>
+        <%= form.text_field :title %>
+    </div>
+    <div>
+        <%= form.label :body %>
+        <%= form.text_area :body %>
+    </div>
+    <%= form.button %>
+<% end %>

@@ -78,6 +78,7 @@ To delete it from database
 
 ## Rails routes 
 - root route -> by default it points to /
+- rails route are always defined in specific order
 - syntax for route:
     ```
     controller_name#action_name 
@@ -136,3 +137,59 @@ eg.
 ```
     <%= link_to @blog_title ,'/blog_posts/#{@blog_title.id}' %> 
 ```
+
+### htmls rails forms
+we need to route to be added in the form 
+1. POST REQUEST -  post "/blog_posts" , to: "blog_posts#create", as: :blog_posts
+2. GET REQUEST -   get "/blog_posts/new", to: "blog_posts#new", as: :new_blog_post
+
+We also need to add functions in controller to work this.
+And form code can be seen like below.
+```
+<%= form_with model: @blog do |form| %>
+    <div>
+        <%= form.label :title %>
+        <%= form.text_field :title %>
+    </div>
+    <div>
+        <%= form.label :body %>
+        <%= form.text_area :body %>
+    </div>
+    <%= form.button %>
+<% end %>
+```
+
+`new` function ins controller
+```
+    def new
+        @blog = BlogPost.new
+    end
+```
+
+### allowing params to the controller
+- it is private method
+- `params.require(<Parameter>).permit(<list of allowed fields>)`
+```
+      private
+    def blog_post_allowed_params
+        params.require(:blog_post).permit(:title, :body)
+    end
+
+```
+
+### Helper before_action 
+- This action run before running of any function 
+` before_action :[Symbol], only: [Array of action names], except: [Array of actions]`
+```
+   before_action :set_blog_post_by_id, only: [:show, :delete, :update, :edit] , except: [:new]
+```
+
+### Gem: Devise
+- bundle install devise
+- rails g devise:install 
+- rails g devise User 
+- rails db:migrate
+
+- devise generate the view and route along with controller, which we can use directly
+- `before_action` method is alos provided by device which we can call for authorization.
+- `before_action :authenticate_user!`

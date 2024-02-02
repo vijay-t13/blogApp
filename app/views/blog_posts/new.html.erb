@@ -1,13 +1,23 @@
-<h2>New Blog</h2>
+<h2>New post</h2>
 
-<%= form_with model: @blog do |form| %>
+
+
+<%= form_with model: @blog_post do |form| %>
+
+    <% if @blog_post.errors.full_messages.any? %>
+        <% @blog_post.errors.full_messages do |msg| %>
+            <h3><%= msg %></h3>
+        <% end %>
+    <% end %>  
+
+ 
     <div>
         <%= form.label :title %>
         <%= form.text_field :title %>
     </div>
     <div>
         <%= form.label :body %>
-        <%= form.text_field :body %>
+        <%= form.text_area :body %>
     </div>
     <%= form.button %>
 <% end %>

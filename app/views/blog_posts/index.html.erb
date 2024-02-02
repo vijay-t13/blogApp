@@ -9,6 +9,10 @@ Hello, Welcome to my blog!
     <% @blog_posts.each do |value| %>
     <div>
        <%= link_to value.title, blog_post_path(value) %> 
+        <% if value.draft? %> <span>draft </span><% end %>
+        <% if value.scheduled? %> <span>scheduled</span> <% end %>
+        <% if value.published? %> <span>published</span> <% end %>
+
     </div>
     <% end %>
 

@@ -193,3 +193,10 @@ And form code can be seen like below.
 - devise generate the view and route along with controller, which we can use directly
 - `before_action` method is alos provided by device which we can call for authorization.
 - `before_action :authenticate_user!`
+
+### Rails migration
+
+- `Add<NameOfColumn>To<NameOfTable> <column_name>:<format>`
+```
+rails generate migration AddPublishAtToBlogPosts published_at:datetime    
+```

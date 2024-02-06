@@ -1,9 +1,13 @@
 class BlogPostsController < ApplicationController
+
+  before_action :get_post_by_user, only: []
   before_action :set_blog_post_by_id, only: [:show, :edit, :delete, :update]
   before_action :authenticate_user!, except: [:index, :show]
 
+
+
   def index
-    @blog_posts = user_signed_in? ? BlogPost.sorted.all : BlogPost.published.sorted
+    @blog_posts = user_signed_in? ? BlogPost.sorted.all.where(user_id: current_user.id) : BlogPost.published.sorted
   end
 
   def show
@@ -44,12 +48,16 @@ class BlogPostsController < ApplicationController
   private
 
   def blog_post_allowed_params
-    params.require(:blog_post).permit(:title, :body, :published_at)
+    params.require(:blog_post).permit(:title, :body, :published_at, :user_id)
   end
 
   def set_blog_post_by_id
-    @blog_post = user_signed_in? ? BlogPost.find(params[:id]) : BlogPost.published.find(params[:id])
+  # if params[:user_id] != current_user.id
+  #     redirect_to root_path
+  # end
+  @blog_post = user_signed_in? ? BlogPost.find(params[:id]) : BlogPost.published.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     redirect_to root_path
   end
+
 end
